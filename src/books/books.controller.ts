@@ -18,7 +18,13 @@ export class BooksController {
 
   @Post()
   async createBook(@Body() createBookDto: CreateBookDto): Promise<Book> {
-    return await this.booksService.create(createBookDto);
+    const user = {
+      id: '601aa440-fddb-4967-92c7-107faf6cdb23',
+      email: 'jhon@teste.com',
+      password: 'pass123',
+    };
+
+    return await this.booksService.create(createBookDto, user);
   }
 
   @Get()

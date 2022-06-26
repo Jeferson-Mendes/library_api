@@ -21,6 +21,7 @@ export class BooksService {
   async detail(bookId: string): Promise<Book> {
     const bookExists = await this.bookRepository.findOne({
       where: { id: bookId },
+      relations: ['user'],
     });
 
     if (!bookExists) {
@@ -31,11 +32,12 @@ export class BooksService {
   }
 
   // Create book
-  async create(createBookDto: CreateBookDto): Promise<Book> {
+  async create(createBookDto: CreateBookDto, user): Promise<Book> {
     const book = this.bookRepository.create({
       name: createBookDto.name,
       price: createBookDto.price,
       author: createBookDto.author,
+      user: user,
     });
 
     return await this.bookRepository.save(book);
